@@ -8,6 +8,7 @@ function Home() {
   const [week, setWeek] = useState("");
   const [results, setResults] = useState([]);
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   // Get JWT token from localStorage
   const getAuthHeaders = () => {
@@ -19,6 +20,7 @@ function Home() {
     e.preventDefault();
     setError("");
     setResults([]);
+    setIsLoading(true);
 
     try {
       const params = new URLSearchParams();
@@ -41,14 +43,17 @@ function Home() {
       } else {
         setError("Failed to fetch data. Please try again.");
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <div className="home-container">
       <div className="form-header">
-        <h2>Search for Team Analytics</h2>
+        <h2>Team Analytics Dashboard</h2>
       </div>
+      
       <form className="form-section" onSubmit={handleSubmit}>
         <div className="input-group">
           <label htmlFor="teamName">Team Name</label>
@@ -57,9 +62,11 @@ function Home() {
             type="text"
             value={teamName}
             onChange={(e) => setTeamName(e.target.value)}
-            placeholder="Enter team name"
+            placeholder="Enter team name (e.g., Chiefs, 49ers)"
+            disabled={isLoading}
           />
         </div>
+        
         <div className="input-group">
           <label htmlFor="week">Week Number</label>
           <input
@@ -69,16 +76,35 @@ function Home() {
             onChange={(e) => setWeek(e.target.value)}
             placeholder="Enter week number (optional)"
             min="1"
+            max="18"
+            disabled={isLoading}
           />
         </div>
+        
         <div className="btn-group">
-          <button type="submit">Search</button>
+          <button type="submit" disabled={isLoading}>
+            {isLoading ? (
+              <>
+                <span className="loading-spinner"></span>
+                Searching...
+              </>
+            ) : (
+              'Search Games'
+            )}
+          </button>
         </div>
       </form>
 
       {error && (
         <div className="error-message">
           <p>{error}</p>
+        </div>
+      )}
+
+      {isLoading && (
+        <div className="loading-state">
+          <span className="loading-spinner"></span>
+          Loading game data...
         </div>
       )}
 

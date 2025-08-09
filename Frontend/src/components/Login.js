@@ -8,11 +8,13 @@ function Login({ onLogin }) {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isRegistering, setIsRegistering] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setIsLoading(true);
 
     try {
       const apiUrl = process.env.REACT_APP_API_URL || 'http://127.0.0.1:5000';
@@ -42,16 +44,28 @@ function Login({ onLogin }) {
       } else {
         setError('Authentication failed. Please try again.');
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
     <div className="login-container">
       <form className="login-form" onSubmit={handleSubmit}>
-        <h2>{isRegistering ? 'Register' : 'Login'}</h2>
-        {error && <p className="error-message">{error}</p>}
+        <div className="login-header">
+          <h2>{isRegistering ? 'Create Account' : 'Welcome Back'}</h2>
+          <p className="login-subtitle">
+            {isRegistering 
+              ? 'Join our sports management platform' 
+              : 'Sign in to your account'
+            }
+          </p>
+        </div>
+        
+        {error && <div className="error-message">{error}</div>}
+        
         <div className="form-group">
-          <label htmlFor="username">Username:</label>
+          <label htmlFor="username">Username</label>
           <input
             type="text"
             id="username"
@@ -60,10 +74,12 @@ function Login({ onLogin }) {
             required
             minLength="3"
             placeholder="Enter your username"
+            disabled={isLoading}
           />
         </div>
+        
         <div className="form-group">
-          <label htmlFor="password">Password:</label>
+          <label htmlFor="password">Password</label>
           <input
             type="password"
             id="password"
@@ -72,21 +88,37 @@ function Login({ onLogin }) {
             required
             minLength="6"
             placeholder="Enter your password"
+            disabled={isLoading}
           />
         </div>
-        <button type="submit">
-          {isRegistering ? 'Register' : 'Login'}
-        </button>
-        <button 
-          type="button" 
-          onClick={() => {
-            setIsRegistering(!isRegistering);
-            setError('');
-          }}
-          className="toggle-mode"
-        >
-          {isRegistering ? 'Already have an account? Login' : 'Need an account? Register'}
-        </button>
+        
+        <div className="login-actions">
+          <button 
+            type="submit" 
+            className="btn-primary"
+            disabled={isLoading}
+          >
+            {isRegistering ? 'Create Account' : 'Sign In'}
+          </button>
+          
+          <button 
+            type="button" 
+            onClick={() => {
+              setIsRegistering(!isRegistering);
+              setError('');
+            }}
+            className="toggle-mode"
+            disabled={isLoading}
+          >
+            {isRegistering ? 'Already have an account? Sign In' : 'Need an account? Register'}
+          </button>
+        </div>
+        
+        <div className="login-form-footer">
+          <div className="security-badge">
+            Secure SSL Connection
+          </div>
+        </div>
       </form>
     </div>
   );
