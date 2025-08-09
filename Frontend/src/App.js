@@ -6,6 +6,7 @@ import DataManagement from "./components/DataManagement";
 import Analytics from "./components/Analytics";
 import PlayerStats from "./components/PlayerStats";
 import InjuryReport from "./components/InjuryReport";
+import "./App.css";
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(
@@ -23,58 +24,68 @@ function App() {
 
   return (
     <Router>
-      <div>
-        <header style={{ backgroundColor: '#007bff', color: 'white', padding: '1rem' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', maxWidth: '1200px', margin: '0 auto' }}>
-            <h1>Sports Management System</h1>
-            {isAuthenticated && (
-              <nav style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-                <Link to="/home" style={{ color: 'white', textDecoration: 'none' }}>Dashboard</Link>
-                <Link to="/player-stats" style={{ color: 'white', textDecoration: 'none' }}>Player Stats</Link>
-                <Link to="/injuries" style={{ color: 'white', textDecoration: 'none' }}>Injury Report</Link>
-                <Link to="/manage" style={{ color: 'white', textDecoration: 'none' }}>Data Management</Link>
-                <Link to="/analytics" style={{ color: 'white', textDecoration: 'none' }}>Analytics</Link>
-                <button 
-                  onClick={handleLogout}
-                  style={{ 
-                    background: '#dc3545', 
-                    color: 'white', 
-                    border: 'none', 
-                    padding: '0.5rem 1rem', 
-                    borderRadius: '4px',
-                    cursor: 'pointer'
-                  }}
-                >
-                  Logout
-                </button>
-              </nav>
-            )}
+      <div className="app">
+        <header className="app-header">
+          <div className="container">
+            <div className="header-content">
+              <div className="brand">
+                <h1 className="brand-title">⚡ Sports Management Pro</h1>
+                <span className="brand-subtitle">Advanced Analytics Platform</span>
+              </div>
+              {isAuthenticated && (
+                <nav className="main-nav">
+                  <Link to="/home" className="nav-link">
+                    🏠 Dashboard
+                  </Link>
+                  <Link to="/player-stats" className="nav-link">
+                    👤 Player Stats
+                  </Link>
+                  <Link to="/injuries" className="nav-link">
+                    🏥 Injury Report
+                  </Link>
+                  <Link to="/manage" className="nav-link">
+                    📊 Data Management
+                  </Link>
+                  <Link to="/analytics" className="nav-link">
+                    📈 Analytics
+                  </Link>
+                  <button 
+                    onClick={handleLogout}
+                    className="btn btn-danger btn-sm logout-btn"
+                  >
+                    🚪 Logout
+                  </button>
+                </nav>
+              )}
+            </div>
           </div>
         </header>
-        <Routes>
-          <Route path="/login" element={<Login onLogin={handleLogin} />} />
-          <Route
-            path="/home"
-            element={isAuthenticated ? <Home /> : <Navigate to="/login" replace />}
-          />
-          <Route
-            path="/injuries"
-            element={isAuthenticated ? <InjuryReport /> : <Navigate to="/login" replace />}
-          />
-          <Route
-            path="/player-stats"
-            element={isAuthenticated ? <PlayerStats /> : <Navigate to="/login" replace />}
-          />
-          <Route
-            path="/manage"
-            element={isAuthenticated ? <DataManagement /> : <Navigate to="/login" replace />}
-          />
-          <Route
-            path="/analytics"
-            element={isAuthenticated ? <Analytics /> : <Navigate to="/login" replace />}
-          />
-          <Route path="*" element={<Navigate to={isAuthenticated ? "/home" : "/login"} replace />} />
-        </Routes>
+        <main className="app-main">
+          <Routes>
+            <Route path="/login" element={<Login onLogin={handleLogin} />} />
+            <Route
+              path="/home"
+              element={isAuthenticated ? <Home /> : <Navigate to="/login" replace />}
+            />
+            <Route
+              path="/injuries"
+              element={isAuthenticated ? <InjuryReport /> : <Navigate to="/login" replace />}
+            />
+            <Route
+              path="/player-stats"
+              element={isAuthenticated ? <PlayerStats /> : <Navigate to="/login" replace />}
+            />
+            <Route
+              path="/manage"
+              element={isAuthenticated ? <DataManagement /> : <Navigate to="/login" replace />}
+            />
+            <Route
+              path="/analytics"
+              element={isAuthenticated ? <Analytics /> : <Navigate to="/login" replace />}
+            />
+            <Route path="*" element={<Navigate to={isAuthenticated ? "/home" : "/login"} replace />} />
+          </Routes>
+        </main>
       </div>
     </Router>
   );

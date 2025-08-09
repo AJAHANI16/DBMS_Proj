@@ -34,3 +34,14 @@ Desktop.ini
 
 # Miscellaneous
 *.local
+
+# Python
+Backend/venv/
+Backend/__pycache__/
+Backend/*.pyc
+Backend/instance/
+*.db
+
+# Environment files
+.env
+.env.local

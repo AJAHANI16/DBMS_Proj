@@ -8,11 +8,13 @@ function Login({ onLogin }) {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isRegistering, setIsRegistering] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
+    setIsLoading(true);
 
     try {
       const apiUrl = process.env.REACT_APP_API_URL || 'http://127.0.0.1:5000';
@@ -42,52 +44,98 @@ function Login({ onLogin }) {
       } else {
         setError('Authentication failed. Please try again.');
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <div className="login-container">
-      <form className="login-form" onSubmit={handleSubmit}>
-        <h2>{isRegistering ? 'Register' : 'Login'}</h2>
-        {error && <p className="error-message">{error}</p>}
-        <div className="form-group">
-          <label htmlFor="username">Username:</label>
-          <input
-            type="text"
-            id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-            minLength="3"
-            placeholder="Enter your username"
-          />
+    <div className="login-wrapper">
+      <div className="login-container">
+        <div className="login-card card">
+          <div className="card-header text-center">
+            <h2 className="login-title">
+              {isRegistering ? '📝 Create Account' : '🔐 Welcome Back'}
+            </h2>
+            <p className="login-subtitle">
+              {isRegistering 
+                ? 'Join our Sports Management Platform' 
+                : 'Sign in to access your dashboard'
+              }
+            </p>
+          </div>
+          <div className="card-body">
+            <form onSubmit={handleSubmit} className="login-form">
+              {error && (
+                <div className="alert alert-error">
+                  <span>⚠️ {error}</span>
+                </div>
+              )}
+              
+              <div className="form-group">
+                <label htmlFor="username" className="form-label">Username</label>
+                <input
+                  type="text"
+                  id="username"
+                  className="form-control"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  required
+                  minLength="3"
+                  placeholder="Enter your username"
+                  disabled={isLoading}
+                />
+              </div>
+              
+              <div className="form-group">
+                <label htmlFor="password" className="form-label">Password</label>
+                <input
+                  type="password"
+                  id="password"
+                  className="form-control"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  minLength="6"
+                  placeholder="Enter your password"
+                  disabled={isLoading}
+                />
+              </div>
+              
+              <button 
+                type="submit" 
+                className="btn btn-primary btn-lg w-100"
+                disabled={isLoading}
+              >
+                {isLoading ? (
+                  <span>⏳ {isRegistering ? 'Creating Account...' : 'Signing In...'}</span>
+                ) : (
+                  <span>{isRegistering ? '✨ Register' : '🚀 Login'}</span>
+                )}
+              </button>
+            </form>
+          </div>
+          <div className="card-footer text-center">
+            <button 
+              type="button" 
+              onClick={() => {
+                setIsRegistering(!isRegistering);
+                setError('');
+              }}
+              className="btn btn-secondary"
+              disabled={isLoading}
+            >
+              {isRegistering ? '👈 Already have an account? Login' : '📝 Need an account? Register'}
+            </button>
+          </div>
         </div>
-        <div className="form-group">
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            minLength="6"
-            placeholder="Enter your password"
-          />
+        
+        <div className="demo-credentials">
+          <h4>🎯 Demo Credentials</h4>
+          <p><strong>Username:</strong> admin</p>
+          <p><strong>Password:</strong> password123</p>
         </div>
-        <button type="submit">
-          {isRegistering ? 'Register' : 'Login'}
-        </button>
-        <button 
-          type="button" 
-          onClick={() => {
-            setIsRegistering(!isRegistering);
-            setError('');
-          }}
-          className="toggle-mode"
-        >
-          {isRegistering ? 'Already have an account? Login' : 'Need an account? Register'}
-        </button>
-      </form>
+      </div>
     </div>
   );
 }
