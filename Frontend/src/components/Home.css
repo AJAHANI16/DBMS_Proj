@@ -1,138 +1,197 @@
-/* General body styling */
-body {
-    text-align: center;
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #e6e6e6; /* Light gray background */
-    color: #333; /* Dark gray text */
+/* Professional Home Page */
+.home-page {
+  padding: var(--space-xl) 0;
+  min-height: calc(100vh - 80px);
+}
+
+/* Page Header */
+.page-header {
+  text-align: center;
+  margin-bottom: var(--space-2xl);
+  animation: fadeIn 0.6s ease-out;
+}
+
+.page-title {
+  color: var(--primary-navy);
+  font-size: var(--font-size-4xl);
+  margin-bottom: var(--space-md);
+  font-weight: var(--font-weight-bold);
+}
+
+.page-subtitle {
+  color: var(--medium-grey);
+  font-size: var(--font-size-lg);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Content Layout */
+.content-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-xl);
+  margin-bottom: var(--space-2xl);
+}
+
+/* Search Section */
+.search-section {
+  animation: slideUp 0.6s ease-out;
+}
+
+.search-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-lg);
+}
+
+/* Results Section */
+.results-section {
+  animation: slideUp 0.8s ease-out;
+}
+
+.badge {
+  background: var(--accent-gradient);
+  color: var(--white);
+  padding: var(--space-xs) var(--space-md);
+  border-radius: var(--border-radius-xl);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  margin-left: auto;
+}
+
+/* Alert Messages */
+.alert {
+  padding: var(--space-md);
+  border-radius: var(--border-radius-md);
+  margin-bottom: var(--space-lg);
+  font-weight: var(--font-weight-medium);
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.alert-error {
+  background-color: rgba(244, 67, 54, 0.1);
+  color: var(--error-red);
+  border: 1px solid rgba(244, 67, 54, 0.3);
+}
+
+/* Quick Actions */
+.quick-actions {
+  animation: fadeIn 1s ease-out;
+}
+
+.quick-actions h3 {
+  text-align: center;
+  color: var(--primary-navy);
+  margin-bottom: var(--space-xl);
+  font-size: var(--font-size-2xl);
+}
+
+.action-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--space-lg);
+}
+
+.action-card {
+  background: var(--white);
+  border-radius: var(--border-radius-lg);
+  padding: var(--space-xl);
+  text-decoration: none;
+  color: inherit;
+  box-shadow: var(--shadow-md);
+  transition: all var(--transition-normal);
+  text-align: center;
+  border: 2px solid transparent;
+}
+
+.action-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-xl);
+  border-color: var(--primary-blue);
+  text-decoration: none;
+}
+
+.action-icon {
+  font-size: 3rem;
+  margin-bottom: var(--space-md);
+  display: block;
+}
+
+.action-card h4 {
+  color: var(--primary-navy);
+  margin-bottom: var(--space-sm);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+}
+
+.action-card p {
+  color: var(--medium-grey);
+  font-size: var(--font-size-sm);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Card Header Enhancements */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-header h3 {
+  margin: 0;
+  color: var(--primary-navy);
+  font-size: var(--font-size-xl);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .page-title {
+    font-size: var(--font-size-3xl);
   }
   
-  /* Container for the entire form and results */
-  .home-container {
-    max-width: 800px;
-    margin: 50px auto;
-    padding: 20px;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  .page-subtitle {
+    font-size: var(--font-size-base);
   }
   
-  /* Title styling */
-  .form-header h2 {
-    text-align: center;
-    font-size: 24px;
-    color: #d10024; /* ESPN red */
-    margin-bottom: 20px;
+  .form-row {
+    grid-template-columns: 1fr;
   }
   
-  /* Form section styling */
-  .form-section {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+  .action-grid {
+    grid-template-columns: 1fr;
   }
   
-  .input-group {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  .quick-actions h3 {
+    font-size: var(--font-size-xl);
   }
   
-  .input-group label {
-    font-size: 14px;
-    margin-bottom: 5px;
-    text-align: left;
-    width: 50%;
+  .action-card {
+    padding: var(--space-lg);
+  }
+}
+
+@media (max-width: 480px) {
+  .home-page {
+    padding: var(--space-lg) 0;
   }
   
-  .input-group input {
-    width: 50%; /* Shrinks input to half its container width */
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
+  .page-header {
+    margin-bottom: var(--space-xl);
   }
   
-  /* Button styling */
-  .btn-group {
-    display: flex;
-    justify-content: center;
+  .content-grid {
+    gap: var(--space-lg);
+    margin-bottom: var(--space-xl);
   }
-  
-  .btn-group button {
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #d10024; /* ESPN red */
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    text-transform: uppercase;
-    font-weight: bold;
-    margin-top: 10px;
-  }
-  
-  .btn-group button:hover {
-    background-color: #a5001c; /* Slightly darker red */
-  }
-  
-  /* Error message */
-  .error-message p {
-    color: #d10024;
-    font-size: 14px;
-    text-align: center;
-  }
-  
-  /* Results section */
-  .results-section h3 {
-    font-size: 20px;
-    color: #333;
-    margin-top: 30px;
-    text-align: center;
-  }
-  
-  .results-list {
-    list-style-type: none;
-    padding: 0;
-    margin-top: 20px;
-  }
-  
-  .result-item {
-    padding: 10px;
-    border-bottom: 1px solid #ccc;
-    font-size: 16px;
-  }
-  
-  .result-item:last-child {
-    border-bottom: none;
-  }
-  
-  /* Responsive design */
-  @media (max-width: 768px) {
-    .home-container {
-      padding: 15px;
-    }
-  
-    .form-header h2 {
-      font-size: 20px;
-    }
-  
-    .input-group input {
-      width: 80%; /* Adjusts input width for smaller screens */
-      font-size: 14px;
-    }
-  
-    .btn-group button {
-      font-size: 14px;
-    }
-  
-    .results-section h3 {
-      font-size: 18px;
-    }
-  
-    .result-item {
-      font-size: 14px;
-    }
-  }
+}
   
