@@ -1,284 +1,575 @@
+/* Professional Injury Report Component Styles */
 .injury-report-container {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 2rem;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: var(--spacing-xl) var(--spacing-lg);
+  font-family: var(--font-family-primary);
+  background-color: var(--light-gray);
 }
 
-.injury-report-container h2 {
-  color: #2c3e50;
-  margin-bottom: 0.5rem;
-  font-size: 2rem;
+.injury-report-header {
+  text-align: center;
+  margin-bottom: var(--spacing-2xl);
+  padding: var(--spacing-2xl);
+  background: var(--white);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border-color);
+}
+
+.injury-report-header h2 {
+  color: var(--primary-color);
+  margin-bottom: var(--spacing-sm);
+  font-size: var(--font-size-3xl);
+  font-weight: 700;
+  position: relative;
+}
+
+.injury-report-header h2::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 4px;
+  background: linear-gradient(135deg, var(--error-color) 0%, #c0392b 100%);
+  border-radius: 2px;
 }
 
 .injury-subtitle {
-  color: #7f8c8d;
-  margin-bottom: 2rem;
+  color: var(--medium-gray);
+  font-size: var(--font-size-lg);
+  margin: 0;
   font-style: italic;
 }
 
-/* Filters */
+.injury-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--spacing-xl);
+  margin-bottom: var(--spacing-2xl);
+}
+
+.summary-card,
+.stat-card {
+  background: var(--white);
+  padding: var(--spacing-xl);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-lg);
+  text-align: center;
+  transition: all var(--transition-normal);
+  border: 1px solid var(--border-color);
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card.critical::before,
+.summary-card.critical::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(135deg, var(--error-color) 0%, #c0392b 100%);
+}
+
+.stat-card.major::before,
+.summary-card.major::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(135deg, var(--warning-color) 0%, #e67e22 100%);
+}
+
+.stat-card.minor::before,
+.summary-card.minor::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(135deg, var(--success-color) 0%, var(--success-light) 100%);
+}
+
+.stat-card.total::before,
+.summary-card.total::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(135deg, var(--accent-color) 0%, var(--accent-dark) 100%);
+}
+
+.stat-card:hover,
+.summary-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-xl);
+}
+
+.stat-card h4,
+.summary-card h3 {
+  color: var(--medium-gray);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: var(--spacing-md);
+}
+
+.stat-number,
+.summary-number {
+  font-size: var(--font-size-4xl);
+  font-weight: 700;
+  margin: 0;
+  line-height: 1;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.stat-card.critical .stat-number,
+.summary-card.critical .summary-number {
+  color: var(--error-color);
+}
+
+.stat-card.major .stat-number,
+.summary-card.major .summary-number {
+  color: var(--warning-color);
+}
+
+.stat-card.minor .stat-number,
+.summary-card.minor .summary-number {
+  color: var(--success-color);
+}
+
+.stat-card.total .stat-number,
+.summary-card.total .summary-number {
+  color: var(--accent-color);
+}
+
+.injury-filters,
+.filters-section {
+  background: var(--white);
+  padding: var(--spacing-2xl);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-lg);
+  margin-bottom: var(--spacing-2xl);
+  border: 1px solid var(--border-color);
+}
+
 .injury-filters {
   display: flex;
-  gap: 2rem;
-  margin-bottom: 2rem;
-  padding: 1rem;
-  background-color: #f8f9fa;
-  border-radius: 8px;
-  border: 1px solid #e9ecef;
+  gap: var(--spacing-xl);
+  align-items: end;
+  flex-wrap: wrap;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  min-width: 150px;
 }
 
 .filter-group label {
+  font-size: var(--font-size-sm);
+  font-weight: 600;
+  color: var(--primary-color);
+  margin-bottom: var(--spacing-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  font-weight: 500;
-  color: #495057;
+  gap: var(--spacing-sm);
 }
 
 .filter-group select {
-  padding: 0.5rem;
-  border: 1px solid #ced4da;
-  border-radius: 4px;
-  background-color: white;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 2px solid var(--border-color);
+  border-radius: var(--border-radius-md);
+  font-size: var(--font-size-sm);
+  background: var(--white);
+  transition: all var(--transition-normal);
+}
+
+.filter-group select:focus {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
 }
 
 .filter-group input[type="checkbox"] {
-  margin-right: 0.5rem;
+  margin-right: var(--spacing-sm);
+  transform: scale(1.2);
 }
 
-/* Statistics Cards */
 .injury-stats {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1.5rem;
-  margin-bottom: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--spacing-xl);
+  margin-bottom: var(--spacing-2xl);
 }
 
-.stat-card {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  padding: 1.5rem;
-  border-radius: 10px;
-  text-align: center;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.stat-card h4 {
-  margin: 0 0 0.5rem 0;
-  font-size: 0.9rem;
-  opacity: 0.9;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.stat-number {
-  font-size: 2rem;
-  font-weight: bold;
-  margin: 0;
-}
-
-/* Table Styles */
 .injury-table-container {
+  background: var(--white);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  margin-bottom: var(--spacing-2xl);
+}
+
+.table-header {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-light) 100%);
+  color: var(--white);
+  padding: var(--spacing-lg) var(--spacing-xl);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.table-header h3 {
+  margin: 0;
+  font-size: var(--font-size-lg);
+  font-weight: 600;
+}
+
+.sort-info {
+  font-size: var(--font-size-sm);
+  opacity: 0.9;
+  font-style: italic;
+}
+
+.table-scroll {
   overflow-x: auto;
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  margin-bottom: 2rem;
+  -webkit-overflow-scrolling: touch;
 }
 
 .injury-table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.9rem;
+  font-size: var(--font-size-sm);
+  min-width: 800px;
 }
 
 .injury-table th {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  font-weight: 600;
-  padding: 1rem 0.75rem;
+  background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary-color) 100%);
+  color: var(--white);
+  padding: var(--spacing-md) var(--spacing-lg);
   text-align: left;
-  border: none;
+  font-weight: 600;
   text-transform: uppercase;
-  font-size: 0.8rem;
   letter-spacing: 0.5px;
+  font-size: var(--font-size-xs);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  border: none;
 }
 
 .injury-table td {
-  padding: 1rem 0.75rem;
-  border-bottom: 1px solid #e9ecef;
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-bottom: 1px solid var(--border-color);
+  color: var(--dark-gray);
   vertical-align: middle;
 }
 
 .injury-table tbody tr {
-  transition: background-color 0.2s ease;
+  transition: all var(--transition-fast);
+  background: var(--white);
 }
 
 .injury-table tbody tr:hover {
-  background-color: #f8f9fa;
+  background: linear-gradient(135deg, var(--light-gray) 0%, #f0f8ff 100%);
+  transform: scale(1.01);
+}
+
+.injury-table tbody tr:nth-child(even) {
+  background: rgba(248, 249, 250, 0.5);
+}
+
+.injury-table tbody tr:nth-child(even):hover {
+  background: linear-gradient(135deg, var(--light-gray) 0%, #f0f8ff 100%);
 }
 
 .active-injury {
-  background-color: #fff5f5 !important;
+  background: linear-gradient(135deg, #fff5f5 0%, #ffebee 100%) !important;
+  border-left: 4px solid var(--error-color);
 }
 
 .recovered-injury {
-  background-color: #f0fff4 !important;
+  background: linear-gradient(135deg, #f0fff4 0%, #e8f5e8 100%) !important;
+  border-left: 4px solid var(--success-color);
 }
 
 .player-name {
   font-weight: 600;
-  color: #2c3e50;
+  color: var(--primary-color);
 }
 
 .injury-description {
-  max-width: 200px;
+  max-width: 250px;
   word-wrap: break-word;
-  line-height: 1.4;
+  line-height: 1.5;
+  color: var(--dark-gray);
 }
 
 .duration {
   text-align: center;
   font-weight: 500;
+  font-family: var(--font-family-mono);
+  color: var(--medium-gray);
 }
 
-/* Severity Badges */
 .severity-badge {
-  padding: 0.3rem 0.8rem;
-  border-radius: 20px;
-  font-size: 0.8rem;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--border-radius-sm);
+  font-size: var(--font-size-xs);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  text-align: center;
+  min-width: 70px;
+  display: inline-block;
 }
 
 .severity-critical {
-  background-color: #dc3545;
-  color: white;
+  background: linear-gradient(135deg, var(--error-color) 0%, #c0392b 100%);
+  color: var(--white);
+  box-shadow: var(--shadow-sm);
 }
 
 .severity-severe {
-  background-color: #fd7e14;
-  color: white;
+  background: linear-gradient(135deg, #fd7e14 0%, #e8590c 100%);
+  color: var(--white);
+  box-shadow: var(--shadow-sm);
 }
 
 .severity-moderate {
-  background-color: #ffc107;
-  color: #212529;
+  background: linear-gradient(135deg, var(--warning-color) 0%, #e67e22 100%);
+  color: var(--white);
+  box-shadow: var(--shadow-sm);
 }
 
 .severity-minor {
-  background-color: #20c997;
-  color: white;
+  background: linear-gradient(135deg, var(--success-color) 0%, var(--success-light) 100%);
+  color: var(--white);
+  box-shadow: var(--shadow-sm);
 }
 
 .severity-mild {
-  background-color: #6f42c1;
-  color: white;
+  background: linear-gradient(135deg, #6f42c1 0%, #59359a 100%);
+  color: var(--white);
+  box-shadow: var(--shadow-sm);
 }
 
 .severity-unknown {
-  background-color: #6c757d;
-  color: white;
+  background: linear-gradient(135deg, var(--medium-gray) 0%, var(--dark-gray) 100%);
+  color: var(--white);
+  box-shadow: var(--shadow-sm);
 }
 
-/* Status Badges */
 .status-badge {
-  padding: 0.3rem 0.8rem;
-  border-radius: 20px;
-  font-size: 0.8rem;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--border-radius-sm);
+  font-size: var(--font-size-xs);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  text-align: center;
+  min-width: 80px;
+  display: inline-block;
 }
 
 .status-active {
-  background-color: #dc3545;
-  color: white;
+  background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+  color: var(--error-color);
+  border: 1px solid #ef9a9a;
 }
 
 .status-recovered {
-  background-color: #28a745;
-  color: white;
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+  color: var(--success-color);
+  border: 1px solid #bbf7d0;
 }
 
-/* Loading and Error States */
-.injury-loading, .injury-error {
-  text-align: center;
-  padding: 3rem;
-  font-size: 1.1rem;
-}
-
+.injury-loading,
 .injury-error {
-  color: #dc3545;
-  background-color: #f8d7da;
-  border: 1px solid #f5c6cb;
-  border-radius: 8px;
+  text-align: center;
+  padding: var(--spacing-2xl);
+  font-size: var(--font-size-lg);
+  border-radius: var(--border-radius-lg);
+  margin: var(--spacing-xl);
+  box-shadow: var(--shadow-md);
 }
 
 .injury-loading {
-  color: #495057;
+  background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+  color: var(--accent-color);
+  border: 1px solid #90caf9;
+}
+
+.injury-error {
+  background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+  color: var(--error-color);
+  border: 1px solid #ef9a9a;
 }
 
 .no-data {
   text-align: center;
-  color: #6c757d;
+  color: var(--medium-gray);
   font-style: italic;
-  padding: 2rem !important;
+  padding: var(--spacing-2xl);
+  background: var(--white);
+  border-radius: var(--border-radius-lg);
+  border: 2px dashed var(--border-color);
+  box-shadow: var(--shadow-sm);
 }
 
-/* Refresh Button */
+.no-data::before {
+  content: '🎉';
+  display: block;
+  font-size: var(--font-size-4xl);
+  margin-bottom: var(--spacing-md);
+}
+
 .refresh-section {
   text-align: center;
 }
 
 .refresh-btn {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: linear-gradient(135deg, var(--accent-color) 0%, var(--accent-dark) 100%);
+  color: var(--white);
   border: none;
-  padding: 0.75rem 2rem;
-  border-radius: 25px;
-  font-size: 1rem;
+  padding: var(--spacing-md) var(--spacing-xl);
+  border-radius: var(--border-radius-md);
+  font-size: var(--font-size-base);
   font-weight: 600;
   cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: all var(--transition-normal);
+  box-shadow: var(--shadow-md);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
+}
+
+.refresh-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left var(--transition-slow);
 }
 
 .refresh-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  box-shadow: var(--shadow-lg);
+}
+
+.refresh-btn:hover::before {
+  left: 100%;
 }
 
 .refresh-btn:active {
   transform: translateY(0);
+  box-shadow: var(--shadow-sm);
 }
 
 /* Responsive Design */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .injury-report-container {
-    padding: 1rem;
+    padding: var(--spacing-lg) var(--spacing-md);
+  }
+  
+  .injury-summary,
+  .injury-stats {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--spacing-lg);
   }
   
   .injury-filters {
     flex-direction: column;
-    gap: 1rem;
+    align-items: stretch;
   }
   
+  .filter-group {
+    min-width: auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .injury-report-container {
+    padding: var(--spacing-md);
+  }
+  
+  .injury-report-header h2 {
+    font-size: var(--font-size-2xl);
+  }
+  
+  .injury-summary,
   .injury-stats {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 1fr;
+  }
+  
+  .summary-number,
+  .stat-number {
+    font-size: var(--font-size-3xl);
+  }
+  
+  .table-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--spacing-sm);
+    text-align: center;
   }
   
   .injury-table {
-    font-size: 0.8rem;
+    font-size: var(--font-size-xs);
   }
   
   .injury-table th,
   .injury-table td {
-    padding: 0.5rem;
+    padding: var(--spacing-sm);
   }
   
   .injury-description {
     max-width: 150px;
+  }
+}
+
+@media (max-width: 480px) {
+  .injury-summary,
+  .injury-stats {
+    grid-template-columns: 1fr;
+  }
+  
+  .summary-card,
+  .stat-card {
+    padding: var(--spacing-lg);
+  }
+  
+  .summary-number,
+  .stat-number {
+    font-size: var(--font-size-2xl);
+  }
+  
+  .injury-filters,
+  .injury-report-header {
+    padding: var(--spacing-lg);
+  }
+  
+  .severity-badge,
+  .status-badge {
+    font-size: 10px;
+    padding: 2px 4px;
+    min-width: 50px;
   }
 }
